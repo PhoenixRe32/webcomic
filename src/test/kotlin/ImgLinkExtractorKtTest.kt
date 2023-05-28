@@ -1,14 +1,12 @@
-import com.pittacode.webcomic.crawler.Filename
-import com.pittacode.webcomic.crawler.ImgDlLink
-import com.pittacode.webcomic.crawler.Link
-import com.pittacode.webcomic.crawler.extractImgLinksInOrder
+import com.pittacode.webcomic.crawler.*
 import io.kotest.assertions.assertSoftly
 import io.kotest.matchers.shouldBe
 import kotlin.test.Test
 
-class MainKtTest {
+class ImgLinkExtractorKtTest {
+
     // given
-    val blockOfHtmlSource = """
+    val niceBlock = """
 <div class="item"> <a href="https://www.kevinbolk.com/wp-content/uploads/2021/07/luigi-anothercastle.jpg" data-fancybox="gallery"><img     src="https://www.kevinbolk.com/wp-content/uploads/2021/07/luigi-anothercastle.jpg" class="img-fluid" /></a></div>
 <div class="item"> <a href="https://www.kevinbolk.com/wp-content/uploads/2021/07/luigi-kart.jpg" data-fancybox="gallery"><img
 src="https://www.kevinbolk.com/wp-content/uploads/2021/07/luigi-kart.jpg" class="img-fluid" /></a></div>
@@ -18,7 +16,7 @@ src="https://www.kevinbolk.com/wp-content/uploads/2021/07/luigi-kart.jpg" class=
     @Test
     fun `given block of html source code extract image links`() {
         // when
-        val result = extractImgLinksInOrder(blockOfHtmlSource).map(ImgDlLink::link)
+        val result = extractImgLinksInOrder(niceBlock).map(ImgDlLink::link)
 
         // then
         assertSoftly {
@@ -32,7 +30,7 @@ src="https://www.kevinbolk.com/wp-content/uploads/2021/07/luigi-kart.jpg" class=
     @Test
     fun `given block of html source code generate image downloaded filenames`() {
         // when
-        val result = extractImgLinksInOrder(blockOfHtmlSource).map(ImgDlLink::fileName)
+        val result = extractImgLinksInOrder(niceBlock).map(ImgDlLink::fileName)
 
         // then
         assertSoftly {
