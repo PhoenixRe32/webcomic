@@ -17,10 +17,18 @@ internal fun extractImgLinksInOrder(blockOfHtmlSource: String): List<ImgDlLink> 
         .mapIndexed { index, imgSrc ->
             ImgDlLink(
                 link = Link(imgSrc),
-                fileName = Filename("${index.toString().padStart(3, '0')}-${imgSrc.substringAfterLast('/')}")
+                fileName = Filename("${index.toString().padStart(3, '0')}-${sanitise(imgSrc.substringAfterLast('/'))}")
             )
         }
         .toList()
+}
+
+fun sanitise(filename: String): String {
+    // very naive way to determine if the link path ends in a file name or it's another link thingy
+    // TODO make it a bit smarter but it's never going to be 100% correct, take it with each site you encounter
+    val extensionProbably = filename.substringAfterLast('.')
+    if ((3..4).contains(extensionProbably.length)) return filename
+    return "page.jpg"
 }
 
 internal data class ImgDlLink(val link: Link, val fileName: Filename)
