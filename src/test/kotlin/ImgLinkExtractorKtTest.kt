@@ -1,4 +1,7 @@
-import com.pittacode.webcomic.crawler.*
+import com.pittacode.webcomic.crawler.singlepage.Filename
+import com.pittacode.webcomic.crawler.singlepage.ImgDlLink
+import com.pittacode.webcomic.crawler.singlepage.Link
+import com.pittacode.webcomic.crawler.singlepage.extractImgLinksInOrder
 import io.kotest.assertions.assertSoftly
 import io.kotest.matchers.shouldBe
 import kotlin.test.Test

@@ -1,4 +1,4 @@
-package com.pittacode.webcomic.crawler
+package com.pittacode.webcomic.crawler.singlepage
 
 // TODO assumes that src="..." is always without any spaces or in someway separated in the source html
 private val imgTagRegex = Regex("<img[^>]*>", RegexOption.IGNORE_CASE)
