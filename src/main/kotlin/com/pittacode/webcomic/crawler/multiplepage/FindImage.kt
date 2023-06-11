@@ -50,7 +50,7 @@ object FindAuroraComicImage : FindComicImage {
                 }
             }
         }
-        logger.info { "Comic image links found: $result" }
+        logger.info { "Comic image links found: ${result.map(ComicImage::imgUrl)}" }
         return result.first()
     }
 }
