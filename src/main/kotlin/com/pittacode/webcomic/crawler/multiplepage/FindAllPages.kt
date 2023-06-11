@@ -9,7 +9,8 @@ interface FindAllPages {
 
 open class FindAllPagesDefault(
     private val findComicImages: FindComicImages,
-    private val findNextPage: FindNextPage
+    private val findNextPage: FindNextPage,
+    private val comicImageDownloader: ComicImageDownloader
 ) : FindAllPages {
 
     override fun startingFrom(startingPage: PageUrl): List<ComicImage> {
@@ -17,12 +18,13 @@ open class FindAllPagesDefault(
     }
 
     private fun findPagesStartingFrom(currentPage: PageUrl): List<ComicImage> {
-        val comicImage = findComicImages.on(currentPage)
+        val comicImages = findComicImages.on(currentPage)
+        comicImageDownloader.downloadAndSave(comicImages)
         val nextPage = findNextPage.of(currentPage)
         return when {
-            nextPage == null -> comicImage // default assumption is that no next page manifests as null (TODO use sealed types)
-            nextPage.isNotTheNextPage(currentPage) -> comicImage
-            else -> comicImage + findPagesStartingFrom(nextPage)
+            nextPage == null -> comicImages // default assumption is that no next page manifests as null (TODO use sealed types)
+            nextPage.isNotTheNextPage(currentPage) -> comicImages
+            else -> comicImages + findPagesStartingFrom(nextPage)
         }
     }
 

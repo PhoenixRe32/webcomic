@@ -2,25 +2,32 @@ package com.pittacode.webcomic.crawler.multiplepage
 
 import com.pittacode.webcomic.crawler.model.ComicImage
 import kotlinx.coroutines.*
+import mu.KotlinLogging
 import java.io.File
 import java.nio.file.Path
 
-object DownloadComicImages {
+interface ComicImageDownloader {
+    fun downloadAndSave(comicImages: List<ComicImage>)
+}
 
-    suspend fun downloadAndSaveImages(comicImages: List<ComicImage>, parentDirectory: Path) {
-        val images = mutableListOf<Deferred<File>>()
-        CoroutineScope(Dispatchers.Default).launch {
+
+class DefaultComicImageDownloader(private val parentDirectory: Path) : ComicImageDownloader {
+
+    override fun downloadAndSave(comicImages: List<ComicImage>) {
+        CoroutineScope(Dispatchers.IO).launch {
+            val images = mutableListOf<Deferred<File>>()
             for (comicImage in comicImages) {
                 images.add(async(Dispatchers.IO) { downloadAndSaveImage(comicImage, parentDirectory) })
             }
-        }.join()
-
-        println("Status: ")
-        images
-            .filter { it.isCompleted }
-            .map { it.getCompleted() }
-            .map { it.absolutePath }
-            .forEach(::println)
+            images.awaitAll()
+            logger.info {
+                "Status\n\t" + images
+                    .filter { it.isCompleted }
+                    .map { it.getCompleted() }
+                    .map { it.absolutePath }
+                    .joinToString("\n\t")
+            }
+        }
     }
 
     private suspend fun downloadAndSaveImage(comicImage: ComicImage, parentDirectory: Path): File {
@@ -28,7 +35,7 @@ object DownloadComicImages {
             val pageNumber = comicImage.pageUrl.lastPathSegment
             val imageName = comicImage.imgUrl.lastPathSegment.substringBeforeLast('.')
             val extension = comicImage.imgUrl.lastPathSegment.substringAfterLast('.')
-            val title = comicImage.title
+            val title = comicImage.title.sanitiseForFileName()
             val fileName = "$pageNumber $imageName [$title].$extension"
             val file = parentDirectory.resolve(fileName).toFile()
             comicImage.imgUrl.url
@@ -40,4 +47,14 @@ object DownloadComicImages {
             file
         }
     }
+
+    companion object {
+        private val logger = KotlinLogging.logger {}
+    }
 }
+
+private fun String.sanitiseForFileName(): String =
+    replace("\\p{Punct}".toRegex(), "_")
+        .replace("\\s".toRegex(), "_")
+        .replace("__+".toRegex(), "_")
+        .take(100)
