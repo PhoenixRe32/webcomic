@@ -54,7 +54,8 @@ class DefaultComicImageDownloader(private val parentDirectory: Path) : ComicImag
 }
 
 private fun String.sanitiseForFileName(): String =
-    replace("\\p{Punct}".toRegex(), "_")
+        replace("\\p{Punct}".toRegex(), "_")
         .replace("\\s".toRegex(), "_")
         .replace("__+".toRegex(), "_")
+            .replace("_s_", "s_")
         .take(100)
