@@ -14,7 +14,7 @@ interface FindNextPage {
     fun of(currentPage: PageUrl): PageUrl?
 }
 
-object AuroraFindNextPage : FindNextPage {
+object FindNextAuroraPage : FindNextPage {
     private val logger = KotlinLogging.logger {}
 
     override fun of(currentPage: PageUrl): PageUrl? {

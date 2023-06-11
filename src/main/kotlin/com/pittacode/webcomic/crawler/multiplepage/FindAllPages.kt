@@ -1,26 +1,29 @@
 package com.pittacode.webcomic.crawler.multiplepage
 
+import com.pittacode.webcomic.crawler.model.ComicImage
 import com.pittacode.webcomic.crawler.model.PageUrl
 
 interface FindAllPages {
-    fun startingFrom(startingPage: PageUrl): List<PageUrl>
+    fun startingFrom(startingPage: PageUrl): List<ComicImage>
 }
 
 open class FindAllPagesDefault(
+    private val findComicImage: FindComicImage,
     private val findNextPage: FindNextPage
 ) : FindAllPages {
 
-    override fun startingFrom(startingPage: PageUrl): List<PageUrl> {
+    override fun startingFrom(startingPage: PageUrl): List<ComicImage> {
         return findPagesStartingFrom(startingPage)
     }
 
-    private fun findPagesStartingFrom(currentPage: PageUrl): List<PageUrl> {
+    private fun findPagesStartingFrom(currentPage: PageUrl): List<ComicImage> {
+        val comicImage = findComicImage.on(currentPage)
         val nextPage = findNextPage.of(currentPage)
         return when {
-            nextPage == null -> listOf(currentPage) // default assumption is that no next page manifests as null (TODO use sealed types)
-            nextPage.isNotTheNextPage(currentPage) -> listOf(currentPage)
-            nextPage.value().contains("1-1-2") -> listOf(currentPage)
-            else -> listOf(currentPage) + findPagesStartingFrom(nextPage)
+            nextPage == null -> listOf(comicImage) // default assumption is that no next page manifests as null (TODO use sealed types)
+            nextPage.isNotTheNextPage(currentPage) -> listOf(comicImage)
+            nextPage.value().contains("1-1-2") -> listOf(comicImage)
+            else -> listOf(comicImage) + findPagesStartingFrom(nextPage)
         }
     }
 
