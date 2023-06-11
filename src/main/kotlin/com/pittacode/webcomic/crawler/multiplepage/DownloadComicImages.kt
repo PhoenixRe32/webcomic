@@ -25,8 +25,11 @@ object DownloadComicImages {
 
     private suspend fun downloadAndSaveImage(comicImage: ComicImage, parentDirectory: Path): File {
         return withContext(Dispatchers.IO) {
-            val fileName =
-                "${comicImage.pageUrl.lastPathSegment} [${comicImage.title}] ${comicImage.imgUrl.lastPathSegment}"
+            val pageNumber = comicImage.pageUrl.lastPathSegment
+            val imageName = comicImage.imgUrl.lastPathSegment.substringBeforeLast('.')
+            val extension = comicImage.imgUrl.lastPathSegment.substringAfterLast('.')
+            val title = comicImage.title
+            val fileName = "$pageNumber $imageName [$title].$extension"
             val file = parentDirectory.resolve(fileName).toFile()
             comicImage.imgUrl.url
                 .openStream().use { input ->
