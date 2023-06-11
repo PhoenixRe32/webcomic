@@ -1,5 +1,6 @@
 package com.pittacode.webcomic.crawler.multiplepage
 
+import com.pittacode.webcomic.crawler.model.PageUrl
 import it.skrape.core.htmlDocument
 import it.skrape.fetcher.HttpFetcher
 import it.skrape.fetcher.response
@@ -10,16 +11,16 @@ import it.skrape.selects.html5.a
 import mu.KotlinLogging
 
 interface FindNextPage {
-    fun of(currentPage: String): String?
+    fun of(currentPage: PageUrl): PageUrl?
 }
 
 object AuroraFindNextPage : FindNextPage {
     private val logger = KotlinLogging.logger {}
 
-    override fun of(currentPage: String): String? {
+    override fun of(currentPage: PageUrl): PageUrl? {
         val result = skrape(HttpFetcher) {
             request {
-                url = currentPage
+                url = currentPage.value()
             }
 
             response {
@@ -35,6 +36,6 @@ object AuroraFindNextPage : FindNextPage {
             }
         }
         logger.info { "Next page links found: $result" }
-        return result.first()
+        return result.firstOrNull()?.let(::PageUrl)
     }
 }
