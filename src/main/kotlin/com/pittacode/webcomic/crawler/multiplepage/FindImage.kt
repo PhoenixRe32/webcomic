@@ -13,15 +13,15 @@ import it.skrape.selects.html5.a
 import it.skrape.selects.html5.img
 import mu.KotlinLogging
 
-interface FindComicImage {
-    fun on(page: PageUrl): ComicImage
+interface FindComicImages {
+    fun on(page: PageUrl): List<ComicImage>
 }
 
 
-object FindAuroraComicImage : FindComicImage {
+object FindAuroraComicImages : FindComicImages {
     private val logger = KotlinLogging.logger {}
 
-    override fun on(page: PageUrl): ComicImage {
+    override fun on(page: PageUrl): List<ComicImage> {
         val result = skrape(HttpFetcher) {
             request {
                 url = page.urlString
@@ -43,7 +43,7 @@ object FindAuroraComicImage : FindComicImage {
                                             title = attribute("title")
                                         )
                                     }
-                                }.toSet()
+                                }
                             }
                         }
                     }
@@ -51,6 +51,6 @@ object FindAuroraComicImage : FindComicImage {
             }
         }
         logger.info { "Comic image links found: ${result.map(ComicImage::imgUrl)}" }
-        return result.first()
+        return result
     }
 }
