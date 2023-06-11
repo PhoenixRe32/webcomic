@@ -7,9 +7,8 @@ import it.skrape.core.htmlDocument
 import it.skrape.fetcher.HttpFetcher
 import it.skrape.fetcher.response
 import it.skrape.fetcher.skrape
-import it.skrape.selects.and
-import it.skrape.selects.attribute
 import it.skrape.selects.html5.a
+import it.skrape.selects.html5.div
 import it.skrape.selects.html5.img
 import mu.KotlinLogging
 
@@ -30,18 +29,22 @@ object FindAuroraComicImages : FindComicImages {
             response {
                 htmlDocument {
                     relaxed = true
-                    a {
-                        withClass = "next-webcomic-link" and "webcomic-link"
+                    div {
+                        withClass = "webcomic-media"
                         findAll {
-                            img {
-                                withAttributeKey = "srcset"
+                            a {
+                                withClass = "next-webcomic-link"
                                 findAll {
-                                    map {
-                                        ComicImage(
-                                            pageUrl = page,
-                                            imgUrl = ImgUrl(value = attribute("src")),
-                                            title = attribute("title")
-                                        )
+                                    img {
+                                        findAll {
+                                            map {
+                                                ComicImage(
+                                                    pageUrl = page,
+                                                    imgUrl = ImgUrl(value = it attribute "src"),
+                                                    title = it attribute "title"
+                                                )
+                                            }
+                                        }
                                     }
                                 }
                             }
