@@ -13,6 +13,8 @@ repositories {
 dependencies {
     implementation("it.skrape:skrapeit:1.2.2")
 
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.1")
+
     implementation("io.github.microutils:kotlin-logging-jvm:3.0.5")
     implementation("ch.qos.logback:logback-classic:1.4.5")
 
