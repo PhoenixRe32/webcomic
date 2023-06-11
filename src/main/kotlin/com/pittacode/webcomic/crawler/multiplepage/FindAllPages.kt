@@ -22,7 +22,7 @@ open class FindAllPagesDefault(
         return when {
             nextPage == null -> listOf(comicImage) // default assumption is that no next page manifests as null (TODO use sealed types)
             nextPage.isNotTheNextPage(currentPage) -> listOf(comicImage)
-            nextPage.value().contains("1-1-2") -> listOf(comicImage)
+            nextPage.urlString.contains("1-1-2") -> listOf(comicImage)
             else -> listOf(comicImage) + findPagesStartingFrom(nextPage)
         }
     }

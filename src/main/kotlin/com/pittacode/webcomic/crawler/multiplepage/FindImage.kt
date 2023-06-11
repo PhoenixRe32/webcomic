@@ -24,7 +24,7 @@ object FindAuroraComicImage : FindComicImage {
     override fun on(page: PageUrl): ComicImage {
         val result = skrape(HttpFetcher) {
             request {
-                url = page.value()
+                url = page.urlString
             }
 
             response {

@@ -20,7 +20,7 @@ object FindNextAuroraPage : FindNextPage {
     override fun of(currentPage: PageUrl): PageUrl? {
         val result = skrape(HttpFetcher) {
             request {
-                url = currentPage.value()
+                url = currentPage.urlString
             }
 
             response {
