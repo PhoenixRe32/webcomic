@@ -2,6 +2,7 @@ package com.pittacode.webcomic.crawler.aurora
 
 import com.pittacode.webcomic.crawler.model.PageUrl
 import com.pittacode.webcomic.crawler.multiplepage.FindNextPage
+import com.pittacode.webcomic.crawler.multiplepage.log
 import it.skrape.core.htmlDocument
 import it.skrape.fetcher.HttpFetcher
 import it.skrape.fetcher.response
@@ -32,7 +33,6 @@ internal object FindNextAuroraPage : FindNextPage {
                 }
             }
         }
-        logger.info { "Next page links found: $result" }
-        return result.firstOrNull()?.let(::PageUrl)
+        return result.firstOrNull()?.let(::PageUrl).also { it.log() }
     }
 }
