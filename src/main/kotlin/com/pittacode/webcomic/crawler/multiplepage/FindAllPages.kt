@@ -31,7 +31,17 @@ open class FindAllPagesDefault(
 
     // Default assumption is that if it's the end there will be no next page but I
     // also noticed pages that take you to the same page so just put as default this
-    protected fun PageUrl.isNotTheNextPage(currentPage: PageUrl): Boolean {
+    protected open fun PageUrl.isNotTheNextPage(currentPage: PageUrl): Boolean {
         return currentPage == this
+    }
+}
+
+class FindAllPagesDefaultStopAt1(
+    findComicImages: FindComicImages,
+    findNextPage: FindNextPage,
+    comicImageDownloader: ComicImageDownloader
+) : FindAllPagesDefault(findComicImages, findNextPage, comicImageDownloader) {
+    override fun PageUrl.isNotTheNextPage(currentPage: PageUrl): Boolean {
+        return true
     }
 }
