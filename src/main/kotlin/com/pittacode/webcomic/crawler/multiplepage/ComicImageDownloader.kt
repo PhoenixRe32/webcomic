@@ -32,10 +32,10 @@ class DefaultComicImageDownloader(private val parentDirectory: Path) : ComicImag
 
     private suspend fun downloadAndSaveImage(comicImage: ComicImage, parentDirectory: Path): File {
         return withContext(Dispatchers.IO) {
-            val pageNumber = comicImage.pageUrl.lastPathSegment
-            val imageName = comicImage.imgUrl.lastPathSegment.substringBeforeLast('.')
-            val extension = comicImage.imgUrl.lastPathSegment.substringAfterLast('.')
-            val title = comicImage.title.sanitiseForFileName()
+            val pageNumber = comicImage.pageNumber()
+            val imageName = comicImage.imageName()
+            val extension = comicImage.extension()
+            val title = comicImage.title()
             val fileName = "$pageNumber $imageName [$title].$extension"
             val file = parentDirectory.resolve(fileName).toFile()
             comicImage.imgUrl.url
@@ -52,12 +52,3 @@ class DefaultComicImageDownloader(private val parentDirectory: Path) : ComicImag
         private val logger = KotlinLogging.logger {}
     }
 }
-
-private fun String.sanitiseForFileName(): String =
-    replace("\\p{Punct}".toRegex(), "_")
-        .replace("\\s".toRegex(), "_")
-        .replace("__+".toRegex(), "_")
-        .replace("_s_", "s_")
-        .replace("_t_", "t_")
-        .dropLastWhile { it == '_' }
-        .take(100)

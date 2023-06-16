@@ -24,6 +24,7 @@ open class FindAllPagesDefault(
         return when {
             nextPage == null -> comicImages // default assumption is that no next page manifests as null (TODO use sealed types)
             nextPage.isNotTheNextPage(currentPage) -> comicImages
+//            nextPage.urlString.contains("ksbd-2-0") -> comicImages
             else -> comicImages + findPagesStartingFrom(nextPage)
         }
     }

@@ -1,10 +1,8 @@
-package com.pittacode.webcomic.crawler
+package com.pittacode.webcomic.crawler.aurora
 
 import com.pittacode.webcomic.crawler.model.PageUrl
 import com.pittacode.webcomic.crawler.multiplepage.DefaultComicImageDownloader
 import com.pittacode.webcomic.crawler.multiplepage.FindAllPagesDefault
-import com.pittacode.webcomic.crawler.multiplepage.FindAuroraComicImages
-import com.pittacode.webcomic.crawler.multiplepage.FindNextAuroraPage
 import java.nio.file.Files
 import java.nio.file.Path
 import java.nio.file.Paths
