@@ -12,7 +12,8 @@ sealed class Url(private val value: String) {
         get() = value
     val url: URL
         get() = with(URL(value)) {
-            return URI(protocol, userInfo, host, port, path, query, ref).toURL() // escapes characters this way
+            // TODO temp solution to a redirect issue
+            return URI("https", userInfo, host, port, path, query, ref).toURL() // escapes characters this way
         }
     val lastPathSegment: String
         get() =
