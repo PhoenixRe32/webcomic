@@ -5,6 +5,7 @@ import com.pittacode.webcomic.crawler.model.ComicImage
 import com.pittacode.webcomic.crawler.model.ImgUrl
 import com.pittacode.webcomic.crawler.model.PageUrl
 import com.pittacode.webcomic.crawler.multiplepage.FindComicImages
+import com.pittacode.webcomic.crawler.multiplepage.log
 import it.skrape.core.htmlDocument
 import it.skrape.fetcher.HttpFetcher
 import it.skrape.fetcher.response
@@ -50,7 +51,7 @@ internal object FindAuroraComicImages : FindComicImages {
                 }
             }
         }
-        logger.info { "Comic image links found: ${result.map(ComicImage::imgUrl)}" }
-        return result
+
+        return result.also { it.log() }
     }
 }
