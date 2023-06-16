@@ -13,6 +13,7 @@ interface ComicImageDownloader {
 
 class DefaultComicImageDownloader(private val parentDirectory: Path) : ComicImageDownloader {
 
+    @OptIn(ExperimentalCoroutinesApi::class)
     override fun downloadAndSave(comicImages: List<ComicImage>) {
         CoroutineScope(Dispatchers.IO).launch {
             val images = mutableListOf<Deferred<File>>()
@@ -24,7 +25,7 @@ class DefaultComicImageDownloader(private val parentDirectory: Path) : ComicImag
                 "Status\n\t" + images
                     .filter { it.isCompleted }
                     .map { it.getCompleted() }
-                    .map { it.absolutePath }
+                    .map { "${it.absolutePath} (${it.length()})" }
                     .joinToString("\n\t")
             }
         }
