@@ -2,7 +2,6 @@ package com.pittacode.webcomic.crawler.core.multiplepage
 
 import com.pittacode.webcomic.crawler.core.model.ComicImage
 import com.pittacode.webcomic.crawler.core.model.PageUrl
-import com.pittacode.webcomic.crawler.model.*
 import it.skrape.core.htmlDocument
 import it.skrape.fetcher.HttpFetcher
 import it.skrape.fetcher.response
