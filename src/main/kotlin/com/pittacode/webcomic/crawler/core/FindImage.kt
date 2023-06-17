@@ -52,7 +52,7 @@ abstract class FindComicImagesStrategyWithIndexing(startingIndex: Int = 0) : Fin
 fun log(comicImages: List<ComicImage>) {
     when {
         comicImages.isEmpty() -> logger.warn { "Found no images" }
-        comicImages.size > 1 -> logger.warn { "Found more than 1 image when looking for a div" }
+        comicImages.size > 1 -> logger.warn { "Found more than 1 image" }
     }
     logger.info { "Comic image links found: ${comicImages.map { it.imgUrl.url }}" }
 }

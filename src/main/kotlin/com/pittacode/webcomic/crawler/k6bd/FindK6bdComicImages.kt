@@ -15,7 +15,7 @@ internal class FindK6bdComicImages(startingIndex: Int = 0) : FindComicImagesStra
     override fun Doc.comicImageElementsSelector(): List<DocElement> =
         div {
             withId = "comic"
-            findAll {
+            findFirst {
                 img {
                     findAll {
                         filter { it.hasAttribute("src") }
