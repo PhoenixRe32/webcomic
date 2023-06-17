@@ -1,4 +1,4 @@
-package com.pittacode.webcomic.crawler.model
+package com.pittacode.webcomic.crawler.core.model
 
 import java.net.URI
 import java.net.URL

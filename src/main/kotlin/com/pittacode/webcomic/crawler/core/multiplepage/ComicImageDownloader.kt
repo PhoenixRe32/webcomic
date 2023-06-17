@@ -1,24 +1,29 @@
-package com.pittacode.webcomic.crawler.multiplepage
+package com.pittacode.webcomic.crawler.core.multiplepage
 
-import com.pittacode.webcomic.crawler.model.ComicImage
+import com.pittacode.webcomic.crawler.core.model.ComicImage
 import kotlinx.coroutines.*
 import mu.KotlinLogging
 import java.io.File
+import java.nio.file.Files
 import java.nio.file.Path
+import java.nio.file.Paths
+import kotlin.io.path.exists
 
 interface ComicImageDownloader {
     fun downloadAndSave(comicImages: List<ComicImage>)
 }
 
 
-class DefaultComicImageDownloader(private val parentDirectory: Path) : ComicImageDownloader {
+class DefaultComicImageDownloader(storageDirectory: String) : ComicImageDownloader {
+
+    private val storageDirectory = create(storageDirectory)
 
     @OptIn(ExperimentalCoroutinesApi::class)
     override fun downloadAndSave(comicImages: List<ComicImage>) {
         CoroutineScope(Dispatchers.IO).launch {
             val images = mutableListOf<Deferred<File>>()
             for (comicImage in comicImages) {
-                images.add(async(Dispatchers.IO) { downloadAndSaveImage(comicImage, parentDirectory) })
+                images.add(async(Dispatchers.IO) { downloadAndSaveImage(comicImage, storageDirectory) })
             }
             images.awaitAll()
             logger.info {
@@ -51,5 +56,12 @@ class DefaultComicImageDownloader(private val parentDirectory: Path) : ComicImag
 
     companion object {
         private val logger = KotlinLogging.logger {}
+
+        private fun create(directory: String): Path {
+            val parentDirectory = Paths.get(directory)
+            return parentDirectory
+                .takeIf { it.exists() } // use path it if it exists
+                ?: Files.createDirectory(parentDirectory) // otherwise create it and then use it
+        }
     }
 }

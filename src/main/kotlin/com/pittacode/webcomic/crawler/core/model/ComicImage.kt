@@ -1,4 +1,4 @@
-package com.pittacode.webcomic.crawler.model
+package com.pittacode.webcomic.crawler.core.model
 
 sealed interface ComicImage {
     fun pageNumber(): String
@@ -6,6 +6,7 @@ sealed interface ComicImage {
     fun title(): String
     fun extension(): String
     val imgUrl: ImgUrl
+    override fun toString(): String
 }
 
 data class BaseComicImage(
@@ -24,6 +25,9 @@ data class BaseComicImage(
 
     override fun extension(): String =
         imgUrl.lastPathSegment.substringAfterLast('.')
+
+    override fun toString(): String =
+        "${pageUrl.urlString} --> ${imgUrl.urlString}"
 }
 
 data class IndexedComicImage(
@@ -43,6 +47,9 @@ data class IndexedComicImage(
 
     override fun extension(): String =
         imgUrl.lastPathSegment.substringAfterLast('.')
+
+    override fun toString(): String =
+        "${pageUrl.urlString} --> ${imgUrl.urlString} [${pageNumber().substringBefore(' ')}]"
 }
 
 private fun String.sanitiseForFileName(): String =

@@ -1,50 +1,28 @@
 package com.pittacode.webcomic.crawler.aurora
 
-import com.pittacode.webcomic.crawler.model.BaseComicImage
-import com.pittacode.webcomic.crawler.model.ComicImage
-import com.pittacode.webcomic.crawler.model.ImgUrl
-import com.pittacode.webcomic.crawler.model.PageUrl
-import com.pittacode.webcomic.crawler.multiplepage.FindComicImages
-import com.pittacode.webcomic.crawler.multiplepage.log
-import it.skrape.core.htmlDocument
-import it.skrape.fetcher.HttpFetcher
-import it.skrape.fetcher.response
-import it.skrape.fetcher.skrape
+import com.pittacode.webcomic.crawler.core.model.BaseComicImage
+import com.pittacode.webcomic.crawler.core.model.ComicImage
+import com.pittacode.webcomic.crawler.core.model.ImgUrl
+import com.pittacode.webcomic.crawler.core.model.PageUrl
+import com.pittacode.webcomic.crawler.core.multiplepage.FindComicImagesStrategy
+import it.skrape.selects.Doc
+import it.skrape.selects.DocElement
 import it.skrape.selects.html5.a
 import it.skrape.selects.html5.div
 import it.skrape.selects.html5.img
-import mu.KotlinLogging
 
-internal object FindAuroraComicImages : FindComicImages {
-    private val logger = KotlinLogging.logger {}
+internal class FindAuroraComicImages : FindComicImagesStrategy() {
 
-    override fun on(page: PageUrl): List<ComicImage> {
-        val result = skrape(HttpFetcher) {
-            request {
-                url = page.urlString
-            }
-
-            response {
-                htmlDocument {
-                    relaxed = true
-                    div {
-                        withClass = "webcomic-media"
-                        findAll {
-                            a {
-                                withClass = "next-webcomic-link"
-                                findAll {
-                                    img {
-                                        findAll {
-                                            map {
-                                                BaseComicImage(
-                                                    pageUrl = page,
-                                                    imgUrl = ImgUrl(value = it attribute "src"),
-                                                    title = it attribute "title"
-                                                )
-                                            }
-                                        }
-                                    }
-                                }
+    override fun Doc.comicImageElementsSelector(): List<DocElement> =
+        div {
+            withClass = "webcomic-media"
+            findAll {
+                a {
+                    withClass = "next-webcomic-link"
+                    findAll {
+                        img {
+                            findAll {
+                                this
                             }
                         }
                     }
@@ -52,6 +30,10 @@ internal object FindAuroraComicImages : FindComicImages {
             }
         }
 
-        return result.also { it.log() }
-    }
+    override fun DocElement.asComicImage(page: PageUrl): ComicImage =
+        BaseComicImage(
+            pageUrl = page,
+            imgUrl = ImgUrl(value = this attribute "src"),
+            title = this attribute "title"
+        )
 }

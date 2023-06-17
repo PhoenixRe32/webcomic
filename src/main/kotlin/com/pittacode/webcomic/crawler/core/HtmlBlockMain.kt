@@ -1,6 +1,6 @@
-package com.pittacode.webcomic.crawler
+package com.pittacode.webcomic.crawler.core
 
-import com.pittacode.webcomic.crawler.singlepage.HtmlBlockImageSaverReader
+import com.pittacode.webcomic.crawler.core.singlepage.HtmlBlockImageSaverReader
 import kotlin.io.path.Path
 
 fun main(args: Array<String>) {
