@@ -1,4 +1,4 @@
-package com.pittacode.webcomic.crawler.weegie
+package com.pittacode.webcomic.crawler.kevinbolk
 
 import com.pittacode.webcomic.crawler.core.FindComicImagesStrategyWithIndexing
 import com.pittacode.webcomic.crawler.core.model.ComicImage
@@ -11,7 +11,7 @@ import it.skrape.selects.html5.a
 import it.skrape.selects.html5.div
 import it.skrape.selects.html5.img
 
-internal class FindWeegieComicImages(startingIndex: Int = 0) : FindComicImagesStrategyWithIndexing(startingIndex) {
+internal class FindKevinBokComicImages(startingIndex: Int = 0) : FindComicImagesStrategyWithIndexing(startingIndex) {
 
     override fun Doc.comicImageElementsSelector(): List<DocElement> =
         div {

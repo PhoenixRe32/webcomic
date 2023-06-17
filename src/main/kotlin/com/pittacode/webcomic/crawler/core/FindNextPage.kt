@@ -41,7 +41,7 @@ abstract class FindNextPageStrategy : FindNextPage {
 
 fun log(pageUrl: PageUrl?) {
     when (pageUrl == null) {
-        true -> logger.warn { "Found no images" }
+        true -> logger.warn { "Found no links for the next page" }
         false -> logger.info { "Next page link found: ${pageUrl.urlString}" }
     }
 }
