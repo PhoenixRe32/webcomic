@@ -1,6 +1,6 @@
 package com.pittacode.webcomic.crawler.k6bd
 
-import com.pittacode.webcomic.crawler.core.multiplepage.DefaultComicImageDownloader
+import com.pittacode.webcomic.crawler.core.DefaultComicImageDownloader
 import com.pittacode.webcomic.crawler.core.startCrawling
 import com.pittacode.webcomic.crawler.weegie.FindNextWeegiePage
 import com.pittacode.webcomic.crawler.weegie.FindWeegieComicImages

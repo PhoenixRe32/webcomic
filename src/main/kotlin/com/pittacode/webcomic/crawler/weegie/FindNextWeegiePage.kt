@@ -1,6 +1,6 @@
 package com.pittacode.webcomic.crawler.weegie
 
-import com.pittacode.webcomic.crawler.core.multiplepage.FindNextPageStrategy
+import com.pittacode.webcomic.crawler.core.FindNextPageStrategy
 import it.skrape.selects.Doc
 
 internal object FindNextWeegiePage : FindNextPageStrategy() {

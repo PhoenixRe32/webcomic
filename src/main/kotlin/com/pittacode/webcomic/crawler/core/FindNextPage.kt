@@ -1,4 +1,4 @@
-package com.pittacode.webcomic.crawler.core.multiplepage
+package com.pittacode.webcomic.crawler.core
 
 import com.pittacode.webcomic.crawler.core.model.PageUrl
 import it.skrape.core.htmlDocument

@@ -1,10 +1,10 @@
 package com.pittacode.webcomic.crawler.aurora
 
+import com.pittacode.webcomic.crawler.core.FindComicImagesStrategy
 import com.pittacode.webcomic.crawler.core.model.BaseComicImage
 import com.pittacode.webcomic.crawler.core.model.ComicImage
 import com.pittacode.webcomic.crawler.core.model.ImgUrl
 import com.pittacode.webcomic.crawler.core.model.PageUrl
-import com.pittacode.webcomic.crawler.core.multiplepage.FindComicImagesStrategy
 import it.skrape.selects.Doc
 import it.skrape.selects.DocElement
 import it.skrape.selects.html5.a

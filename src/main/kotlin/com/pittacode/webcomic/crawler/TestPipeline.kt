@@ -2,9 +2,9 @@ package com.pittacode.webcomic.crawler
 
 import com.pittacode.webcomic.crawler.aurora.FindAuroraComicImages
 import com.pittacode.webcomic.crawler.aurora.FindNextAuroraPage
+import com.pittacode.webcomic.crawler.core.DefaultComicImageDownloader
 import com.pittacode.webcomic.crawler.core.model.ComicImage
 import com.pittacode.webcomic.crawler.core.model.PageUrl
-import com.pittacode.webcomic.crawler.core.multiplepage.DefaultComicImageDownloader
 import com.pittacode.webcomic.crawler.core.startCrawling
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking
@@ -25,7 +25,7 @@ suspend fun main() {
         findComicImages = findComicImages,
         findNextPage = findNextPage,
         comicImageDownloader = DefaultComicImageDownloader("tmp"),
-        crawlingStopCondition = { lci: List<ComicImage>, pu: PageUrl? -> pu?.urlString?.contains("27")?:true }
+        crawlingStopCondition = { lci: List<ComicImage>, pu: PageUrl? -> pu?.urlString?.contains("27") ?: true }
     )
 
     runBlocking {

@@ -1,10 +1,10 @@
 package com.pittacode.webcomic.crawler.weegie
 
+import com.pittacode.webcomic.crawler.core.FindComicImagesStrategyWithIndexing
 import com.pittacode.webcomic.crawler.core.model.ComicImage
 import com.pittacode.webcomic.crawler.core.model.ImgUrl
 import com.pittacode.webcomic.crawler.core.model.IndexedComicImage
 import com.pittacode.webcomic.crawler.core.model.PageUrl
-import com.pittacode.webcomic.crawler.core.multiplepage.FindComicImagesStrategyWithIndexing
 import it.skrape.selects.Doc
 import it.skrape.selects.DocElement
 import it.skrape.selects.html5.a

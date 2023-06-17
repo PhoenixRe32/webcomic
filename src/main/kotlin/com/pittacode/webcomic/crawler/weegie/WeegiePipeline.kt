@@ -1,9 +1,7 @@
 package com.pittacode.webcomic.crawler.weegie
 
-import com.pittacode.webcomic.crawler.core.multiplepage.DefaultComicImageDownloader
+import com.pittacode.webcomic.crawler.core.DefaultComicImageDownloader
 import com.pittacode.webcomic.crawler.core.startCrawling
-import com.pittacode.webcomic.crawler.weegie.FindNextWeegiePage
-import com.pittacode.webcomic.crawler.weegie.FindWeegieComicImages
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking
 

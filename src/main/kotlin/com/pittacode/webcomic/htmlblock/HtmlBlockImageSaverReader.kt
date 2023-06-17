@@ -1,4 +1,4 @@
-package com.pittacode.webcomic.crawler.core.singlepage
+package com.pittacode.webcomic.htmlblock
 
 import java.net.URL
 import java.nio.file.Files

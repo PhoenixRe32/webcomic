@@ -1,6 +1,6 @@
 package com.pittacode.webcomic.crawler.aurora
 
-import com.pittacode.webcomic.crawler.core.multiplepage.DefaultComicImageDownloader
+import com.pittacode.webcomic.crawler.core.DefaultComicImageDownloader
 import com.pittacode.webcomic.crawler.core.startCrawling
 
 fun main() {

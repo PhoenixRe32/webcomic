@@ -1,6 +1,6 @@
 package com.pittacode.webcomic.crawler.aurora
 
-import com.pittacode.webcomic.crawler.core.multiplepage.FindNextPageStrategy
+import com.pittacode.webcomic.crawler.core.FindNextPageStrategy
 import it.skrape.selects.Doc
 import it.skrape.selects.and
 import it.skrape.selects.eachHref
