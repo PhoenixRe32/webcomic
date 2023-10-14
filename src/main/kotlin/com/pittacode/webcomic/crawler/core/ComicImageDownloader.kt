@@ -1,6 +1,7 @@
 package com.pittacode.webcomic.crawler.core
 
 import com.pittacode.webcomic.crawler.core.model.ComicImage
+import com.pittacode.webcomic.crawler.core.model.PageUrl
 import kotlinx.coroutines.*
 import mu.KotlinLogging
 import java.io.File
@@ -10,16 +11,15 @@ import java.nio.file.Paths
 import kotlin.io.path.exists
 
 interface ComicImageDownloader {
-    fun downloadAndSave(comicImages: List<ComicImage>)
+    fun downloadAndSave(comicImages: List<ComicImage>, currentPage: PageUrl)
 }
 
 
-class DefaultComicImageDownloader(storageDirectory: String) : ComicImageDownloader {
-
-    private val storageDirectory = create(storageDirectory)
+class DefaultComicImageDownloader(private val storageDirectorySupplier: (pageUrl: PageUrl) -> String) : ComicImageDownloader {
 
     @OptIn(ExperimentalCoroutinesApi::class)
-    override fun downloadAndSave(comicImages: List<ComicImage>) {
+    override fun downloadAndSave(comicImages: List<ComicImage>, currentPage: PageUrl) {
+        val storageDirectory = create(storageDirectorySupplier(currentPage))
         CoroutineScope(Dispatchers.IO).launch {
             val images = mutableListOf<Deferred<File>>()
             for (comicImage in comicImages) {

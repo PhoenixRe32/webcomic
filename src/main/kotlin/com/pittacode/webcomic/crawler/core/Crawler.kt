@@ -2,6 +2,8 @@ package com.pittacode.webcomic.crawler.core
 
 import com.pittacode.webcomic.crawler.core.model.ComicImage
 import com.pittacode.webcomic.crawler.core.model.PageUrl
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.runBlocking
 
 interface Crawler {
     fun startingFrom(startingPage: PageUrl): List<ComicImage>
@@ -19,8 +21,13 @@ open class CrawlerDefault(
     }
 
     private fun findPagesStartingFrom(currentPage: PageUrl): List<ComicImage> {
+        // TODO SOOOOOO Ugly, only for chapter based webcomics
+        runBlocking {
+            delay(5000L)
+        }
         val comicImages = findComicImages.on(currentPage)
-        comicImageDownloader.downloadAndSave(comicImages)
+        comicImageDownloader.downloadAndSave(comicImages, currentPage)
+
         val nextPage = findNextPage.of(currentPage)
         return when {
             nextPage == null -> comicImages // default assumption is that no next page manifests as null (TODO use sealed types)

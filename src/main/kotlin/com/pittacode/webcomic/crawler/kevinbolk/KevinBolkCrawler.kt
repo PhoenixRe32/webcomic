@@ -12,7 +12,7 @@ suspend fun main() {
             startingLink = "https://www.kevinbolk.com/comic/ensign-sue-must-die/",
             findComicImages = FindKevinBokComicImages(),
             findNextPage = FindNextKevinBolkPage,
-            comicImageDownloader = DefaultComicImageDownloader("Ensign [01] Ensign Sue Must Die")
+            comicImageDownloader = DefaultComicImageDownloader { "Ensign [01] Ensign Sue Must Die" }
         )
     }
 
@@ -21,7 +21,7 @@ suspend fun main() {
             startingLink = "https://www.kevinbolk.com/comic/ensigntwo/",
             findComicImages = FindKevinBokComicImages(),
             findNextPage = FindNextKevinBolkPage,
-            comicImageDownloader = DefaultComicImageDownloader("Ensign [02] The Wrath of Sue")
+            comicImageDownloader = DefaultComicImageDownloader { "Ensign [02] The Wrath of Sue" }
         )
     }
 
@@ -30,7 +30,7 @@ suspend fun main() {
             startingLink = "https://www.kevinbolk.com/comic/ensign-crisis/",
             findComicImages = FindKevinBokComicImages(),
             findNextPage = FindNextKevinBolkPage,
-            comicImageDownloader = DefaultComicImageDownloader("Ensign [03] Crisis of Infinite Sues")
+            comicImageDownloader = DefaultComicImageDownloader { "Ensign [03] Crisis of Infinite Sues" }
         )
     }
 
@@ -39,7 +39,7 @@ suspend fun main() {
             startingLink = "https://www.kevinbolk.com/comic/suckstobeweegie/",
             findComicImages = FindKevinBokComicImages(),
             findNextPage = FindNextKevinBolkPage,
-            comicImageDownloader = DefaultComicImageDownloader("Suck to be Weegie")
+            comicImageDownloader = DefaultComicImageDownloader { "Suck to be Weegie" }
         )
     }
 

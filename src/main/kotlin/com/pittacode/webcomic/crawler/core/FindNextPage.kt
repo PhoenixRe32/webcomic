@@ -33,15 +33,15 @@ abstract class FindNextPageStrategy : FindNextPage {
             .toSet()
             .firstOrNull()
             ?.let(::PageUrl)
-            .also { log(it) }
+            .also { log(currentPage, it) }
     }
 
     protected abstract fun Doc.nextPageLinksSelector(): List<String>
 }
 
-fun log(pageUrl: PageUrl?) {
+fun log(currentPage: PageUrl, pageUrl: PageUrl?) {
     when (pageUrl == null) {
-        true -> logger.warn { "Found no links for the next page" }
+        true -> logger.warn { "Found no links for the next page on ${currentPage.urlString}" }
         false -> logger.info { "Next page link found: ${pageUrl.urlString}" }
     }
 }

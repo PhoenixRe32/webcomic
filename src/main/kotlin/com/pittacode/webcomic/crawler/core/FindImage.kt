@@ -35,7 +35,7 @@ abstract class FindComicImagesStrategy : FindComicImages {
 
         return result
             .map { element -> element.asComicImage(page) }
-            .also { log(it) }
+            .also { log(page, it) }
     }
 
     protected abstract fun Doc.comicImageElementsSelector(): List<DocElement>
@@ -49,10 +49,14 @@ abstract class FindComicImagesStrategyWithIndexing(startingIndex: Int = 0) : Fin
     protected val index = AtomicInteger(startingIndex)
 }
 
-fun log(comicImages: List<ComicImage>) {
+fun log(page:PageUrl, comicImages: List<ComicImage>) {
     when {
-        comicImages.isEmpty() -> logger.warn { "Found no images" }
+        comicImages.isEmpty() -> logger.warn { "Found no images at ${page.urlString}" }
         comicImages.size > 1 -> logger.warn { "Found more than 1 image" }
     }
-    logger.info { "Comic image links found: ${comicImages.map { it.imgUrl.url }}" }
+    val comicImagesLinks = comicImages
+        .map { it.imgUrl.url }
+        .joinToString("\n", "\n", "\n")
+    if (comicImagesLinks.isNotEmpty())
+        logger.info { "Comic image links found at ${page.urlString}: $comicImagesLinks" }
 }

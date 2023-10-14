@@ -8,7 +8,7 @@ fun main() {
         startingLink = "https://comicaurora.com/aurora/0-1-1/",
         findComicImages = FindAuroraComicImages(),
         findNextPage = FindNextAuroraPage,
-        comicImageDownloader = DefaultComicImageDownloader("Aurora")
+        comicImageDownloader = DefaultComicImageDownloader { "Aurora" }
     )
     // this actually could in theory exit before the last few images download...
 }
